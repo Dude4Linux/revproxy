@@ -1,0 +1,24 @@
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet manual
+    dns-search local.lxc
+
+auto br0
+iface br0 inet dhcp
+    bridge_ports eth0
+    bridge_fd 0
+    bridge_maxwait 0
+
+auto natbr0
+iface natbr0 inet static
+    bridge_fd 0
+    bridge_maxwait 0
+    address 192.168.121.1
+    netmask 255.255.255.0
+    pre-up brctl addbr natbr0
+    post-up /sbin/ethtool -K natbr0 tx off
+    post-up /etc/init.d/dnsmasq restart
+    post-down brctl delbr natbr0
+
