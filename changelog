@@ -1,0 +1,22 @@
+turnkey-revproxy-14.0 (1) turnkey; urgency=low
+
+  * v14.0 release
+
+  * Initial public release of TurnKey GNU/Linux Reverse Proxy, revproxy.
+
+  * RevProxy related:
+
+    - Custom nginx-proxy script for exposing internal web services.
+    - Changed webshell port to 22320 to support nginx-proxy.
+    - Changed webmin port to 22321 to support nginx-proxy.
+    - Custom iptable-nat script for exposing host ports.
+    - Preconfigured dnsmasq on internal interface supplying DHCP and DNS.
+    - Preconfigured apt-cacher-ng binding to internal interface.
+    - Preconfigured to support IP forwarding.
+    - Includes TurnKey web control panel.
+
+  * Note: Please refer to turnkey-core's changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- John Carver <dude4linux@gmail.com>  Thu, 12 Dec 2013 16:20:32 +0200
+
