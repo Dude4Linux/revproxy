@@ -12,6 +12,7 @@ turnkey-revproxy-14.0 (1) turnkey; urgency=low
     - Custom iptable-nat script for exposing host ports.
     - Preconfigured dnsmasq on internal interface supplying DHCP and DNS.
     - Preconfigured apt-cacher-ng binding to internal interface.
+    - Preconfigured to support IP forwarding.
     - Includes TurnKey web control panel.
 
   * Note: Please refer to turnkey-core's changelog for changes common to all

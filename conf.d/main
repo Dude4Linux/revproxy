@@ -1,5 +1,8 @@
 #!/bin/bash -ex
 
+# enable ip forwarding
+sed -i "/^#net.ipv4.ip_forward=1/ s/#//" /etc/sysctl.conf
+
 # change webshell and webmin listening ports in stunnel4
 sed -i "s|^accept  = 12320|accept  = 22320|" /etc/stunnel/stunnel.conf
 sed -i "s|^accept  = 12321|accept  = 22321|" /etc/stunnel/stunnel.conf
