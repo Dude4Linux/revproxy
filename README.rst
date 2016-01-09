@@ -1,52 +1,36 @@
-LXC - Linux Containers
-======================
+revproxy - NGINX Reverse Proxy
+==============================
 
-`LXC`_ AKA Linux Containers is a lightweight virtualization system
-supported natively by the Linux kernel. This "meta" appliance makes it
-easy to use LXC to run multiple TurnKey appliances on single server or
-virtual machine while maintaining secure isolation and resource
-allocation.
+`revproxy`_ is a reverse web proxy based on NGINX and Dnsmasq. It is
+designed to allow multiple web domains to share a single public ip
+address. The web domains can be hosted by virtual hosts on an internal
+server, on separate virtual machines for secure isolation, or on
+multiple physical machines.
 
 This appliance includes all the standard features in `TurnKey Core`_, and on
 top of that:
 
-- Includes `TurnKey LXC template`_:
+- Easily expose web services:
 
-    - Download and create a container of any TurnKey appliance.
-    - Insert specified inithooks.conf into container for preseeding.
-    - Supports configuration of network link (e.g., br0, natbr0, none).
-    - Supports configuration of apt proxy.
-    - Verifies GPG signatures when available
-    - Supports LVM on TurnKey's default volume group 'turnkey'
-    - Allows TurnKey Ansible appliance to manage LXC containers
-    - Generic enough to be used on any LXC enabled distribution.
-
-- Easily expose NAT containers services:
-
-    - `nginx-proxy`_: Expose a containers web services to the network by
-      creating an nginx site configuration to proxy all web requests
-      (ports 80, 443, 12320, 12321, 12322) destined for a specific
-      domain to the container on the corresponding ports.
-    - `iptables-nat`_: Expose a containers non-web (e.g., SSH) service
-      to the network by configuring iptables on the host to forward the
+    - `nginx-proxy`_: Expose web services to the Internet by creating
+      an nginx site configuration to proxy all web requests (ports 80, 443)
+      destined for a specific domain to the container on the
+      corresponding ports.
+    - `turnkey-make-ssl-cert`_: Easily create self-signed certificates
+      and certificate requests (CSR) for your custom domains.
+    - `iptables-nat`_: Expose a non-web (e.g. SSH) service to the
+      Internet by configuring iptables on the host to forward the
       traffic it receives on port X to the container on port Y.
 
-- LXC appliance configurations:
+- revproxy appliance configurations:
 
-    - Preconfigured network bridge interface (br0).
-    - Preconfigured network NAT bridge interface (natbr0).
-    - Preconfigured dnsmasq on natbr0 providing DHCP and DNS services.
-      Containers can be referenced by hostname or hostname.local.lxc
-    - Includes apt-cacher-ng, binding to natbr0 interface.
+    - Preconfigured Dnsmasq providing DHCP and DNS services.
+    - SSL offloading, encryption, and certificate management with NGINX
+    - Optionally encrypt traffic to upstream servers
+    - Memcached for improved cache performance
+    - Fail2ban configured to block unwanted traffic and DDOS attacks
+    - Accepts Fail2ban requests from upstream servers
     - Includes TurnKey web control panel (convenience).
-    - Includes example inithooks configuration for preseeding (convenience).
-    - IP forwarding and control groups enabled.
-
-- LXC limitations:
-
-    - The LXC appliance cannot run in nested mode i.e. within an LXC container
-      without additional configuration. This mode is not recommended for
-      production systems because of security concerns.
 
 See the `Usage documentation`_ for further details.
 
@@ -55,10 +39,10 @@ Credentials *(passwords set at first boot)*
 
 -  Webmin, SSH: username **root**
 
-.. _LXC: http://linuxcontainers.org
 .. _TurnKey Core: https://www.turnkeylinux.org/core
-.. _TurnKey LXC template: https://github.com/turnkeylinux-apps/lxc/blob/master/overlay/usr/share/lxc/templates/lxc-turnkey
-.. _nginx-proxy: https://github.com/turnkeylinux-apps/lxc/blob/master/overlay/usr/local/bin/nginx-proxy
-.. _iptables-nat: https://github.com/turnkeylinux-apps/lxc/blob/master/overlay/usr/local/bin/iptables-nat
-.. _Usage documentation: https://github.com/turnkeylinux-apps/lxc/tree/master/docs
+.. _revproxy: https://github.com/turnkeylinux-apps/revproxy
+.. _nginx-proxy: https://github.com/turnkeylinux-apps/revproxy/blob/master/overlay/usr/local/bin/nginx-proxy
+.. _turnkey-make-ssl-cert: https://github.com/turnkeylinux-apps/revproxy/blob/master/overlay/usr/bin/turnkey-make-ssl-cert
+.. _iptables-nat: https://github.com/turnkeylinux-apps/revprox/blob/master/overlay/usr/local/bin/iptables-nat
+.. _Usage documentation: https://github.com/turnkeylinux-apps/revprox/tree/master/docs
 
